@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+<h1>{{ course.course_title }}</h1>
+<h2>
+{{result.name}}
+</h2>
+{{result.description}}
+<br>
+<a href="{% url 'polls:detail' course.id %}">Пройти еще раз?</a>
+</body>
+</html>

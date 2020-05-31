@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ course.course_title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' course.id %}" method="post">
+{% csrf_token %}
+
+{% for question in course.question_set.all %}
+    <fieldset><legend><h3>{{question}}</h3></legend>
+    {% for choice in choices %}
+    {{choice}}
+    <input type="radio" name="question{{ forloop.parentloop.counter }}" id="choice{{ forloop.counter }}" value="{{ choice.score }}">
+    <br>
+        {% endfor %}</fieldset>
+    {% endfor %}
+    <br>
+<input type="submit" value="Результаты">
+</form>
+
+
+
+
+</body>
+</html>

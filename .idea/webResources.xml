@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebResourcesPaths">
+    <contentEntries>
+      <entry url="file://$PROJECT_DIR$">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/polls/static" />
+            <path value="file://$PROJECT_DIR$/polls" />
+            <path value="file://$PROJECT_DIR$/polls/templates" />
+            <path value="file://$PROJECT_DIR$/polls/static/css" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+    </contentEntries>
+  </component>
+</project>
