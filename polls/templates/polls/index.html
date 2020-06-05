@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if latest_courses_list %}
+    <ul>
+    {% for course in latest_courses_list %}
+        <li><a href="/polls/{{ course.id }}/">{{course.course_title}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Нет доступных курсов</p>
+{% endif %}
+</body>
+</html>

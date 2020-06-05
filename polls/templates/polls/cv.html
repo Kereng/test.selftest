@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CV - Brand</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="/polls/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+        <div class="container"><a class="navbar-brand logo" href="{% url 'polls:index' %}">SELFTEST</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navbarNav">
+                <ul class="nav navbar-nav ml-auto"></ul>
+            </div>
+        </div>
+    </nav>
+    <main class="page cv-page">
+        <section class="portfolio-block block-intro border-bottom">
+            <div class="container">
+                <div class="about-me">
+                    <div class="heading">
+                        <h2 class="text-center">{{course.course_title}}</h2>
+                    </div>
+                    <p>{{course.description}}</p>
+                    {% if error_message %}<div class="alert alert-danger" role="alert"><span><strong>{{ error_message }}</strong></span></div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    <form action="{% url 'polls:vote' course.id %}" method="post">
+    {% csrf_token %}
+        <section class="portfolio-block cv">
+            <div class="container">
+                <div class="work-experience group">
+                    <div class="item">
+                        {% for question in course.question_set.all %}
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="text">{{question.question_text}}</h3>
+
+                                <div class="btn-group" role="group" data-toggle="buttons">
+                                    {% for choice in choices %}
+
+                                        <label class="btn btn-outline-secondary" type="button">
+                                        <input type="radio" class="btn-outline-secondary" name="question{{ forloop.parentloop.counter }}" id="choice{{ forloop.counter }}" value="{{ choice.score }}"> {{choice}}
+                                        </label>
+
+                                    {%endfor%}
+                                </div>
+                            </div>
+                        </div> <br>
+                        {%endfor%}
+                    </div>
+                </div>
+                <div class="work-experience group">
+                    <div class="heading"></div>
+                    <div class="item"><input type="submit" value="Результаты"></div>
+                </div>
+
+            </div></section>
+    </form>
+    </main>
+
+</body>
+
+</html>
