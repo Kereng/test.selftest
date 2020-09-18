@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from .models import Choice, Course, Result
+from .models import Choice, Course, Result, Article
 
 def index(request):
 
@@ -47,20 +47,18 @@ def results(request, course_id, score):
     for r in results_data:
         if int(score) >= int(r.target):
             k+=1
+    correct_answers = request.session.get('correct')
+    total_questions = request.session.get('q_amount')
 
-    return render(request, 'polls/res.html', {'course': course,'result':results_data[k-1]})
+    return render(request, 'polls/res.html', {'course': course,'result':results_data[k-1],'correct_answers':correct_answers,'total_questions':total_questions})
 
 def vote(request, course_id):
     course = Course.objects.get(id=course_id)
     choices = Choice.objects.all()
     questions = course.question_set.all()
-    print(questions)
     selected_choices = dict(request.POST)
     del selected_choices['csrfmiddlewaretoken']
-
     print(selected_choices)
-#<QueryDict: {'csrfmiddlewaretoken': ['6MDdCocIDhd7VgYXu1e1tHDrkyRxAFdkja5onsc5BkksCjGzvHohflaiSltsicrW'], 'question1': ['3'], 'question2': ['1']}>
-
     if len(selected_choices) < len(questions):
         # Redisplay the question voting form.
         return render(request, 'polls/cv.html', {
@@ -68,12 +66,17 @@ def vote(request, course_id):
             'error_message': "Вы не ответили на все вопросы",'choices':choices,
         })
     else:
-
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
         score = 0
+        correct = 0
         for key, value in selected_choices.items():
             score += int(value[0])
-
+            if int(value[0]) is not 0:
+                correct +=1
+        request.session['correct'] = correct
+        request.session['q_amount'] = len(questions)
+        res_dict = {'correct':correct,'q_amount':len(questions)}
         return HttpResponseRedirect(reverse('polls:results', args=(course.id,score)))
+
+def read_article(request, article_id):
+    article = Article.objects.get(id=article_id)
+    return render(request, 'polls/article.html', {'article':article})

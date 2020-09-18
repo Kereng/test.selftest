@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 
 
@@ -11,6 +12,7 @@ class Course(models.Model):
     author = models.CharField(max_length=200)
     about = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
+    help_article = models.ForeignKey('Article',on_delete=models.CASCADE)
 
     def __str__(self):
         return self.course_title
@@ -21,7 +23,7 @@ class Course(models.Model):
 
 
 class Question(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    level = models.ForeignKey(Course, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
 
     def __str__(self):
@@ -29,6 +31,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
+    level = models.ForeignKey('Question',on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     score = models.IntegerField(default=0)
 
@@ -40,3 +43,12 @@ class Result(models.Model):
     target = models.IntegerField(default=0)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
+
+class Article(models.Model):
+    article_title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    date = models.DateTimeField('Дата публикации')
+    content = RichTextField()
+    def __str__(self):
+        return self.article_title

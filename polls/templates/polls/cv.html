@@ -47,7 +47,7 @@
                                 <h3 class="text">{{question.question_text}}</h3>
 
                                 <div class="btn-group" role="group" data-toggle="buttons">
-                                    {% for choice in choices %}
+                                    {% for choice in question.choice_set.all %}
 
                                         <label class="btn btn-outline-secondary" type="button">
                                         <input type="radio" class="btn-outline-secondary" name="question{{ forloop.parentloop.counter }}" id="choice{{ forloop.counter }}" value="{{ choice.score }}"> {{choice}}
