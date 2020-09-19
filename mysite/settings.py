@@ -98,6 +98,17 @@ DATABASES = {
  }
 }
 
+DATABASES = {
+ 'default': {
+ 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+ 'NAME': 'ddtmbnp6t5tpdo',
+ 'USER': 'iutlfxbntjqjgl',
+ 'PASSWORD': '7ea2ecdd8abc011b241043fafa2cc367497a4e2173914d95e159714d1368ba84',
+ 'HOST': 'ec2-54-247-79-178.eu-west-1.compute.amazonaws.com',
+ 'PORT': '',
+ }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -140,5 +151,5 @@ STATICFILES_DIRS = ['polls/static']
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+#db_from_env = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'].update(db_from_env)
